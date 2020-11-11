@@ -5,10 +5,12 @@ import axios from 'axios';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import FlipMove from 'react-flip-move';
+import Image from "./Image"
 
 function App() {
+
   const [image, setImage] = useState([]);
-  const [button, setButton] = useState(false)
+
 
   useEffect(() => {
     axios
@@ -21,29 +23,13 @@ function App() {
       });
   }, []);
 
-  let handleHide = (e) => {
-    document.getElementById(`card ${e}`).style.display = "none";
-  };
 
-  let handleChange = (e) => {
-    document.getElementById(`button ${e}`).innerHTML = setButton(button => !button)
-
-  };
 
   return (
     <div className='App'>
-      <FlipMove>
+      <FlipMove className="flip">
         {image.map((image) => (
-          <div key={image.id} id={`card ${image.id}`} className="card">
-            <img className='pictures' src={image.thumbnailUrls.imedia_1024} />
-            <h4 className='h4'>{image.title}</h4>
-            <p>{image.authorScreenName}</p>
-            <p>{image.description}</p>
-            <p>{image.publishedOn}</p>
-            <button class="btn btn-outline-primary" id={`button ${image.id}`} onClick={() => handleChange(image.id)}>{button ? "Pregledano" : "Nepregledano"}</button>
-
-            <button class="btn btn-outline-danger" onClick={() => handleHide(image.id)}>Sakrij</button>
-          </div>
+          <Image image={image}></Image>
         ))}
       </FlipMove>
     </div >
